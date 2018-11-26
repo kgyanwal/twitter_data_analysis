@@ -1,18 +1,3 @@
-api_key <- "NwnWdEsLp0ok4M5uiq8iP80C4"
-api_secret <- "vxVNbYZrP7jhQqSNExyfQOAMiLzmZVh5Mm4faLcTUCHYzP0oD5"
-access_token <- "168596522-nnPdCkx0Hir9K0UXKBP6d5lrN2zMW1KKXDDgvfS5"
-access_token_secret <- "Ko9RanR3K1u218RmDDh7ysNcq5u3jEQtLRqjP0Pa0KGpO"
-setup_twitter_oauth(api_key, api_secret, access_token, access_token_secret)
-1
-
-create_token(
-  app = "popular_twitter_app",
-  consumer_key = "NwnWdEsLp0ok4M5uiq8iP80C4",
-  consumer_secret = "vxVNbYZrP7jhQqSNExyfQOAMiLzmZVh5Mm4faLcTUCHYzP0oD5",
-  access_token = "168596522-nnPdCkx0Hir9K0UXKBP6d5lrN2zMW1KKXDDgvfS5",
-  access_secret = "Ko9RanR3K1u218RmDDh7ysNcq5u3jEQtLRqjP0Pa0KGpO")
-
-setwd("/Users/krishanagyanwali/Desktop/Drmengelcourse/Rfiles")
 library("twitteR")
 library(rtweet)
 library("RCurl")
