@@ -21,9 +21,9 @@ library("RCurl")
 # collecting tweets using rtweet library
 # collecting the tweets from 20 famous people
 twenty_famous_users <- c("TheEllenShow", "justinbieber", "taylorswift13", "Oprah", "MichelleObama",
-                   "selenagomez", "LeoDiCaprio", "realDonaldTrump", "tomhanks", "katyperry", 
-                   "shakira", "rihanna", "britneyspears", "StephenCurry30", "jimmyfallon",
-                   "BillGates", "BrunoMars", "ladygaga", "jtimberlake", "andersoncooper")
+                         "selenagomez", "LeoDiCaprio", "realDonaldTrump", "tomhanks", "katyperry", 
+                         "shakira", "rihanna", "britneyspears", "StephenCurry30", "jimmyfallon",
+                         "BillGates", "BrunoMars", "ladygaga", "jtimberlake", "andersoncooper")
 twenty_famous_people <- lookup_users(twenty_famous_users)
 #save the data frame
 twenty_famous_people_df <- data.frame(cbind(twenty_famous_people))
@@ -189,8 +189,8 @@ func_clean_tweets <- function(tweets) {
   clean_tweets <- gsub('[[:digit:]]', '', clean_tweets)
   # remove html links from tweets
   clean_tweets <- gsub('http\\S+\\s*', '', clean_tweets)
-
-# remove special character
+  
+  # remove special character
   clean_tweets <- gsub("\\d", '', clean_tweets)
   # remove unnecessary spaces/tabs from tweets
   clean_tweets <- gsub('[ \t]{2,}', '', clean_tweets)
@@ -216,11 +216,12 @@ ellen_tweets_clean <- func_clean_tweets(ellen_tweets)
 library(syuzhet)
 
 #get emotions using NRC dictionary
+# An alternative way of analysing sentiments of the tweets. 
 ellen_tweets_emotion <- get_nrc_sentiment(as.character(ellen_tweets_clean))
 emotion_bar = colSums(ellen_tweets_emotion)
 emotion_sum = data.frame(count=emotion_bar, emotion=names(emotion_bar))
 emotion_sum$emotion = factor(emotion_sum$emotion, levels=
-                        emotion_sum$emotion[order(emotion_sum$count, decreasing = TRUE)])
+                               emotion_sum$emotion[order(emotion_sum$count, decreasing = TRUE)])
 
 #visualize the result
 library(plotly)
@@ -1050,22 +1051,21 @@ ggplot(data = sentiment_scores, aes(x = sentiment, y = Score)) +
   xlab("Sentiment") + ylab("Score") + ggtitle("Sentiment Score Based on Tweets about Anderson")
 ##################################
 
-
-
 # predicting a model based on the retweets using Linear Regression
 lm_model = lm(retweet_count ~ followers_count, twenty_famous_people_df)
 
+lm_model
 twenty_famous_people_df$followers_count
 
-summary(lm_model)
+mean_followers_count <- mean(twenty_famous_people_df$followers_count, na.rm = TRUE)
+mean_retweet_count <- mean(twenty_famous_people_df$retweet_count, na.rm = TRUE)
 
+termplot(lm_model)
+summary(lm_model)
+names(twenty_famous_people_df)
 coef(summary(lm_model))
 predict(lm_model)
 
-
-
-
-
-
-
-
+plot(twenty_famous_people_df$retweet_count ~ twenty_famous_people$followers_count, col= "red", data=twenty_famous_people_df)
+abline(lm(twenty_famous_people_df$retweet_count ~ twenty_famous_people_df$followers_count), col ="green")
+cor(twenty_famous_people_df$retweet_count, twenty_famous_people_df$followers_count)
